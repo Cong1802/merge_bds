@@ -1,0 +1,103 @@
+RewriteEngine On    
+RewriteBase /   
+
+#order deny,allow
+#deny from all
+#allow from 14.162.144.184
+#allow from 118.70.126.231
+#allow from 27.3.179.20
+#allow from 123.24.206.25
+#allow from 43.239.223.157
+#allow from 43.239.223.187
+#allow from 43.239.223.60
+#allow from 210.245.75.51
+#allow from 14.248.82.205
+#allow from 118.70.126.138
+#allow from 14.232.208.241
+
+RewriteBase /
+RewriteRule  ^$ home/index.php
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+
+<IfModule mod_rewrite.c>
+    #RewriteEngine On 
+    #RewriteCond %{HTTPS} off
+    #RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    #RewriteCond %{HTTP_HOST} www\.(.+)$ [NC]
+    #RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+</IfModule>
+#After Login
+RewriteRule ^khung-trang.html$ /home/khung_trang.php [NE,L]
+RewriteRule ^DashBoard.html$ /home/trang_tong_quan.php [NE,L]
+RewriteRule ^huong-dan.html$ /home/trang_huong_dan.php [NE,L]
+
+RewriteRule ^tiep-nhan-xe.html$ /home/scx_tiep_nhan_xe.php [NE,L]
+RewriteRule ^tao-phieu-tiep-nhan.html$ /home/scx_tao_phieu_tiep_nhan.php [NE,L]
+RewriteRule ^chinh-sua-phieu-tiep-nhan.html$ /home/scx_sua_phieu_tiep_nhan.php [NE,L]
+RewriteRule ^chi-tiet-phieu-tiep-nhan.html$ /home/scx_chi_tiet_phieu_tiep_nhan.php [NE,L]
+RewriteRule ^them-moi-khach-hang.html$ /home/scx_them_moi_khach_hang.php [NE,L]
+RewriteRule ^them-moi-xe.html$ /home/scx_them_moi_xe.php [NE,L]
+RewriteRule ^bao-gia.html$ /home/scx_bao_gia.php [NE,L]
+RewriteRule ^tao-phieu-bao-gia.html$ /home/scx_tao_phieu_bao_gia.php [NE,L]
+RewriteRule ^hoa-don.html$ /home/scx_hoa_don.php [NE,L]
+RewriteRule ^tao-hoa-don.html$ /home/scx_tao_hoa_don.php [NE,L]
+RewriteRule ^danh-muc-xe.html$ /home/scx_danh_muc_xe.php [NE,L]
+
+RewriteRule ^ban-hang.html$ /home/bh_ban_hang.php [NE,L]
+RewriteRule ^chi-tiet-hoa-don-ban-hang.html$ /home/bh_chi_tiet_hoa_don_bh.php [NE,L]
+RewriteRule ^chi-tiet-phieu-tra-hang.html$ /home/bh_chi_tiet_phieu_tra_hang.php [NE,L]
+RewriteRule ^tao-hoa-don-ban-hang.html$ /home/bh_tao_hoa_don_bh.php [NE,L]
+RewriteRule ^tra-hang.html$ /home/bh_tra_hang.php [NE,L]
+RewriteRule ^tao-phieu-tra-hang.html$ /home/bh_tao_phieu_tra_hang.php [NE,L]
+
+RewriteRule ^tat-ca-hang-hoa.html$ /home/kh_tat_ca_hang_hoa.php [NE,L]
+RewriteRule ^phieu-nhap-kho.html$ /home/kh_phieu_nhap_kho.php [NE,L]
+RewriteRule ^chinh-sua-phieu-nhap-kho.html$ /home/kh_chinh_sua_phieu_nhap_kho.php [NE,L]
+RewriteRule ^tao-phieu-nhap-kho.html$ /home/kh_tao_phieu_nhap_kho.php [NE,L]
+RewriteRule ^chi-tiet-phieu-nhap-kho.html$ /home/kh_chi_tiet_phieu_nhap_kho.php [NE,L]
+
+RewriteRule ^phieu-xuat-kho.html$ /home/kh_phieu_xuat_kho.php [NE,L]
+RewriteRule ^tao-phieu-xuat-kho.html$ /home/kh_tao_phieu_xuat_kho.php [NE,L]
+RewriteRule ^chi-tiet-phieu-xuat.html$ /home/kh_chi_tiet_phieu_xuat.php [NE,L]
+RewriteRule ^chinh-sua-phieu-xuat-kho.html$ /home/kh_chinh_sua_phieu_xuat_kho.php [NE,L]
+
+RewriteRule ^tra-hang-nha-cung-cap.html$ /home/kh_tra_hang_nha_cung_cap.php [NE,L]
+RewriteRule ^tao-phieu-tra-hang-nha-cung-cap.html$ /home/kh_tao_phieu_tra_hang_nha_cung_cap.php [NE,L]
+RewriteRule ^chinh-sua-phieu-tra-hang.html$ /home/kh_chinh_sua_phieu_tra_hang.php [NE,L]
+RewriteRule ^chi-tiet-phieu-tra-hang-ncc.html$ /home/kh_chi_tiet_phieu_tra_hang.php [NE,L]
+
+RewriteRule ^quan-ly-lo-hang.html$ /home/kh_quan_ly_lo_hang.php [NE,L]
+RewriteRule ^kiem-ke-hang-hoa.html$ /home/kh_kiem_ke_hang_hoa.php [NE,L]
+RewriteRule ^chi-tiet-phieu-kiem-ke.html$ /home/kh_chi_tiet_phieu_kiem_ke.php [NE,L]
+RewriteRule ^tao-phieu-kiem-ke.html$ /home/kh_tao_phieu_kiem_ke.php [NE,L]
+RewriteRule ^yeu-cau-dieu-chuyen.html$ /home/kh_yeu_cau_dieu_chuyen.php [NE,L]
+RewriteRule ^tao-phieu-yeu-cau.html$ /home/kh_tao_phieu_yeu_cau.php [NE,L]
+RewriteRule ^chinh-sua-yeu-cau.html$ /home/kh_chinh_sua_yeu_cau.php [NE,L]
+RewriteRule ^chi-tiet-yeu-cau.html$ /home/kh_chi_tiet_yeu_cau.php [NE,L]
+
+RewriteRule ^doi-tac-khach-hang.html$ /home/dt_khach_hang.php [NE,L]
+RewriteRule ^them-moi-doi-tac-khach-hang.html$ /home/dt_them_khach_hang.php [NE,L]
+RewriteRule ^doi-tac-nha-cung-cap.html$ /home/dt_nha_cung_cap.php [NE,L]
+RewriteRule ^them-moi-doi-tac-nha-cung-cap.html$ /home/dt_them_nha_cung_cap.php [NE,L]
+
+RewriteRule ^quan-ly-phieu-thu.html$ /home/qltc_phieu_thu.php [NE,L]
+RewriteRule ^quan-ly-phieu-chi.html$ /home/qltc_phieu_chi.php [NE,L]
+RewriteRule ^quan-ly-cong-no.html$ /home/qltc_cong_no.php [NE,L]
+
+RewriteRule ^bao-hanh.html$ /home/cskh_bao_hanh.php [NE,L]
+RewriteRule ^chi-tiet-bao-hanh.html$ /home/cskh_chi_tiet_bao_hanh.php [NE,L]
+RewriteRule ^lich-bao-duong.html$ /home/cskh_lich_bao_duong.php [NE,L]
+RewriteRule ^chuong-trinh-khuyen-mai.html$ /home/cskh_chuong_trinh_khuyen_mai.php [NE,L]
+RewriteRule ^tao-chuong-trinh-khuyen-mai.html$ /home/cskh_tao_chuong_trinh_khuyen_mai.php [NE,L]
+RewriteRule ^chinh-sua-chuong-trinh-khuyen-mai.html$ /home/cskh_chinh_sua_khuyen_mai.php [NE,L]
+RewriteRule ^cham-soc-khach-hang-sau-sua-chua.html$ /home/cskh_cham_soc_khach_hang_sau_sua_chua.php [NE,L]
+
+RewriteRule ^bao-cao-sua-chua.html$ /home/bc_sua_chua.php [NE,L]
+RewriteRule ^bao-cao-ban-hang.html$ /home/bc_ban_hang.php [NE,L]
+RewriteRule ^bao-cao-kho.html$ /home/bc_kho.php [NE,L]
+RewriteRule ^bao-cao-tai-chinh.html$ /home/bc_tai_chinh.php [NE,L]
+
+RewriteRule ^cai-dat-chung.html$ /home/cdc_cai_dat_chung.php [NE,L]
+RewriteRule ^tao-moi-chi-nhanh.html$ /home/cdc_tao_moi_chi_nhanh.php [NE,L]
+RewriteRule ^chinh-sua-chi-nhanh.html$ /home/cdc_chinh_sua_chi_nhanh.php [NE,L]
