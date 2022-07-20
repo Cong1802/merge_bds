@@ -1,7 +1,8 @@
 <?php include("config.php"); ?>
 <!DOCTYPE html>
 <html lang="vi">
-<div>àdsafsdf</div>
+<div>hello ae</div>
+
 <head>
     <title>Báo cáo bán hàng</title>
     <meta charset="UTF-8">
