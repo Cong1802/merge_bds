@@ -70,5 +70,222 @@ class M_Account extends CI_Model
 		$this->db->where('id', $id);
 		return $this->db->update($this->_table, $data);
 	}
+
+	public function GetListUsers($offset, $perpage,$keyword,$type_news,$cit_id,$district,$follow,$user_id) {
+		if ($type_news != '') {
+            $this->db->where('newType',$type_news);
+        }
+        if ($cit_id != '' && $cit_id != 0) {
+            $this->db->where('cityID', $cit_id);
+        }
+		if ($district != '') {
+            $this->db->where('districtID', $district);
+        }
+        if ($keyword != '') {
+            $this->db->like('name', $keyword);
+        }
+		if($follow == 1)
+		{
+			$this->db->join('followed_user','followed_user.UserFollowed = users.id');
+			$this->db->where('followed_user.UserID',$user_id);
+		}
+		elseif($follow == 0)
+		{
+			$this->db->join('followed_user','followed_user.UserID = users.id');
+			$this->db->where('followed_user.UserFollowed',$user_id);
+		}
+		$this->db->select('*');
+		$this->db->join('city2','city2.cit_id = users.cityID');
+		$this->db->where('userType',0);
+		$this->db->limit($perpage, $offset);
+        $this->db->order_by('users.id', 'desc');
+		return $this->db->get($this->_table)->result_array();
+	}
+
+	public function GetPotential($offset, $perpage,$keyword,$type_news,$cit_id,$district,$user_id) {
+		if ($type_news != '') {
+            $this->db->where('newType',$type_news);
+        }
+        if ($cit_id != '' && $cit_id != 0) {
+            $this->db->where('cityID', $cit_id);
+        }
+		if ($district != '') {
+            $this->db->where('districtID', $district);
+        }
+        if ($keyword != '') {
+            $this->db->like('name', $keyword);
+        }
+		$this->db->select('*');
+		$this->db->join('city2','city2.cit_id = users.cityID');
+		$this->db->where('userType',0);
+		$this->db->limit($perpage, $offset);
+        $this->db->order_by('users.id', 'desc');
+		return $this->db->get($this->_table)->result_array();
+	}
+	public function count_Potential($keyword,$type_news,$cit_id,$district,$user_id) {
+        if ($type_news != '') {
+            $this->db->where('newType',$type_news);
+        }  
+		if ($district != '') {
+            $this->db->where('districtID', $district);
+        } 
+        if ($keyword != '') {
+            $this->db->like('name', $keyword);
+        }
+       
+        if ($cit_id !== '' && $cit_id != 0) {
+            $this->db->where('cityID', $cit_id);
+        }
+		$this->db->select('*');
+		$this->db->where('userType',0);
+		$this->db->join('city2','city2.cit_id = users.cityID');
+		return $this->db->get($this->_table)->num_rows();
+	}
+
+	public function CountFollowUsers($user_id) {
+		$this->db->join('followed_user','followed_user.UserFollowed = users.id');
+		$this->db->where('followed_user.UserID',$user_id);
+		return $this->db->get($this->_table)->num_rows();
+	}
+	public function CountFollower($user_id) {
+		$this->db->join('followed_user','followed_user.UserID = users.id');
+		$this->db->where('followed_user.UserFollowed',$user_id);
+		return $this->db->get($this->_table)->num_rows();
+	}
+
+	public function countAll_Users($keyword,$type_news,$cit_id,$district,$follow,$user_id) {
+        if ($type_news != '') {
+            $this->db->where('newType',$type_news);
+        }  
+		if ($district != '') {
+            $this->db->where('districtID', $district);
+        } 
+        if ($keyword != '') {
+            $this->db->like('name', $keyword);
+        }
+       
+        if ($cit_id !== '' && $cit_id != 0) {
+            $this->db->where('cityID', $cit_id);
+        }
+		if($follow == 1)
+		{
+			$this->db->join('followed_user','followed_user.UserFollowed = users.id');
+			$this->db->where('followed_user.UserID',$user_id);
+		}
+		$this->db->select('*');
+		$this->db->where('userType',0);
+		$this->db->join('city2','city2.cit_id = users.cityID');
+		return $this->db->get($this->_table)->num_rows();
+	}
+	public function countAllPotential() {
+		$this->db->select('*');
+		$this->db->where('userType',0);
+		$this->db->join('city2','city2.cit_id = users.cityID');
+		return $this->db->get($this->_table)->num_rows();
+	}
+
+	public function TenantInformation($id_user) {
+		$this->db->select('*');
+		$this->db->join('city2','city2.cit_id = users.cityID');
+		$this->db->where('id',$id_user);
+		return $this->db->get($this->_table)->row_array();
+	}
+
+	public function CountNews($id) {
+		$this->db->select('*');
+		$this->db->join('post_news','post_news.customer = users.id');
+		$this->db->where('id',$id);
+		return $this->db->get($this->_table)->num_rows();
+	}
+
+	public function followUser($data_insert) {
+		$this->db->insert('followed_user',$data_insert);
+		return $this->db->insert_id();
+	}
+	public function unFollowUser($user_id,$user_follow) {
+		$this->db->where('userID',$user_id);
+		$this->db->where('UserFollowed',$user_follow);
+		return $this->db->delete('followed_user');
+	}
+
+	public function getListFollow($id_user) {
+		$this->db->select('UserFollowed');
+		$this->db->where('userID',$id_user);
+		return $this->db->get('followed_user')->result_array();
+	}
+
+	public function InsertCustomerViews($data_insert) {
+		$this->db->insert('customers_point',$data_insert);
+		return $this->db->insert_id();
+	}
+
+	public function CheckCustomerPoints($id_user,$id_customer) {
+		$this->db->select('*');
+		$this->db->where('customer_id_user',$id_user);
+		$this->db->where('customer_id_customer',$id_customer);
+		return $this->db->get('customers_point')->num_rows();
+	}
+
+	public function CustomerFromPoints($id_user) {
+		$this->db->select('customer_id_customer');
+		$this->db->where('customer_id_user',$id_user);
+		return $this->db->get('customers_point')->result_array();
+	}
+
+	public function GetCustomerFromPoints($offset, $perpage,$keyword,$type_news,$cit_id,$district,$user_id) {
+		if ($type_news != '') {
+            $this->db->where('newType',$type_news);
+        }
+        if ($cit_id != '' && $cit_id != 0) {
+            $this->db->where('cityID', $cit_id);
+        }
+		if ($district != '') {
+            $this->db->where('districtID', $district);
+        }
+        if ($keyword != '') {
+			$keyword2 = substr($keyword,0,4);
+			if(is_numeric($keyword2))
+			{
+				$this->db->like('phone', $keyword);
+			}
+			else
+			{
+				$this->db->like('name', $keyword);
+			}
+        }
+		$this->db->select('*');
+		$this->db->join('customers_point','customers_point.customer_id_customer = users.id');
+		$this->db->where('userType',0);
+		$this->db->limit($perpage, $offset);
+        $this->db->order_by('users.id', 'desc');
+		return $this->db->get($this->_table)->result_array();
+	}
+	public function countCustomerPoints($keyword,$type_news,$cit_id,$district,$user_id) {
+        if ($type_news != '') {
+            $this->db->where('newType',$type_news);
+        }  
+		if ($district != '') {
+            $this->db->where('districtID', $district);
+        } 
+        if ($keyword != '') {
+            $this->db->like('name', $keyword);
+        }
+       
+        if ($cit_id !== '' && $cit_id != 0) {
+            $this->db->where('cityID', $cit_id);
+        }
+		$this->db->select('*');
+		$this->db->where('userType',0);
+		$this->db->where('customer_id_user',$user_id);
+		$this->db->join('customers_point','customers_point.customer_id_customer = users.id');
+		return $this->db->get($this->_table)->num_rows();
+	}
+	public function countAllCustomerPoints($user_id) {
+		$this->db->select('*');
+		$this->db->where('userType',0);
+		$this->db->where('customer_id_user',$user_id);
+		$this->db->join('customers_point','customers_point.customer_id_customer = users.id');
+		return $this->db->get($this->_table)->num_rows();
+	}
 }
 ?>
