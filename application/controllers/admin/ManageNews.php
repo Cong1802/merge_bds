@@ -1,7 +1,7 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 /**
-* 
+* ewqeqweeeeeee
 */
 class ManageNews extends CI_Controller
 {
